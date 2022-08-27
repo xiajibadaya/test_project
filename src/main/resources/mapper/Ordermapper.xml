@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.elmspring.dao.Iorder">
+    <resultMap id="ordFood" type="com.example.elmspring.dto.BusinessFood">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="explain" column="exp"></result>
+        <result property="img" column="img"></result>
+        <result property="price" column="price"></result>
+        <result property="num" column="quantity"></result>
+    </resultMap>
+    <insert id="saveOrder" parameterType="com.example.elmspring.model.order">
+    insert into ord (foodId,quantity,userId) values (#{foodId},#{quantity},#{userId})
+    </insert>
+    <select id="selOrder" parameterType="String" resultMap="ordFood">
+        select f.id as id, name, f.explain as exp, img, price, quantity from  food f ,ord o where f.id=o.foodId and userId = #{userId}
+    </select>
+    <delete id="removeOrder" parameterType="String">
+        delete from ord where userId=#{userId}
+    </delete>
+</mapper>
